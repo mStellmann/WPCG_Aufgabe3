@@ -151,7 +151,7 @@ public class MarchingCubes {
 
 			Point3d vertex = new Point3d();
 			double alpha = 0.5;
-
+			// alpha = - v1 / (v2 - v1)
 			switch (faces[i]) {
 			case 0:
 				vertex.interpolate(p1, p2, alpha);
