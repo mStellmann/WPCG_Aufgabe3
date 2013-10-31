@@ -6,7 +6,7 @@ import interfaces.ImplicitFunction3D;
 import javax.vecmath.Point3d;
 
 /**
- * TEXT
+ * This class creates a triangle mesh based on the marching cubes algorithm.
  * 
  * @author Matthias Stellmann & Grzegorz Markiewicz
  * 
@@ -17,6 +17,12 @@ public class MarchingCubes {
 	 * Stores the computed trianlges.
 	 */
 	private ITriangleMesh triangleMesh;
+	
+	/**
+	 *  Size of the algorithm cube. Affects the resolution of the computed shape.
+	 *  Lower value results in higher resolution, but also increases the computing time.
+	 */
+	double res = 0.1;
 
 	/**
 	 * Triangle Lookup Table.
@@ -150,43 +156,54 @@ public class MarchingCubes {
 				continue;
 
 			Point3d vertex = new Point3d();
-			double alpha = 0.5;
-			// alpha = - v1 / (v2 - v1)
+			double alpha;
 			switch (faces[i]) {
 			case 0:
+				alpha = -v1 / (v2 - v1);
 				vertex.interpolate(p1, p2, alpha);
 				break;
 			case 1:
+				alpha = -v2 / (v3 - v2);
 				vertex.interpolate(p2, p3, alpha);
 				break;
 			case 2:
+				alpha = -v3 / (v4 - v3);
 				vertex.interpolate(p3, p4, alpha);
 				break;
 			case 3:
+				alpha = -v1 / (v4 - v1);
 				vertex.interpolate(p1, p4, alpha);
 				break;
 			case 4:
+				alpha = -v5 / (v6 - v5);
 				vertex.interpolate(p5, p6, alpha);
 				break;
 			case 5:
+				alpha = -v6 / (v7 - v6);
 				vertex.interpolate(p6, p7, alpha);
 				break;
 			case 6:
+				alpha = -v7 / (v8 - v7);
 				vertex.interpolate(p7, p8, alpha);
 				break;
 			case 7:
+				alpha = -v5 / (v8 - v5);
 				vertex.interpolate(p5, p8, alpha);
 				break;
 			case 8:
+				alpha = -v1 / (v5 - v1);
 				vertex.interpolate(p1, p5, alpha);
 				break;
 			case 9:
+				alpha = -v2 / (v6 - v2);
 				vertex.interpolate(p2, p6, alpha);
 				break;
 			case 10:
+				alpha = -v4 / (v8 - v4);
 				vertex.interpolate(p4, p8, alpha);
 				break;
 			case 11:
+				alpha = -v3 / (v7 - v3);
 				vertex.interpolate(p3, p7, alpha);
 				break;
 			default:
@@ -216,9 +233,6 @@ public class MarchingCubes {
 	 * @return ITriangleMesh of the calculated object.
 	 */
 	public ITriangleMesh computeMarchingCubes(ImplicitFunction3D shape) {
-		// resolution of the cube
-		double res = 0.025;
-
 		for (double x = -2.0; x < 2.0; x += res) {
 			for (double y = -2.0; y < 2.0; y += res) {
 				for (double z = -2.0; z < 2.0; z += res) {
