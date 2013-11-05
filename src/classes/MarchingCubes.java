@@ -22,7 +22,7 @@ public class MarchingCubes {
 	 *  Size of the algorithm cube. Affects the resolution of the computed shape.
 	 *  Lower value results in higher resolution, but also increases the computing time.
 	 */
-	double res = 0.1;
+	double res = 0.025;
 
 	/**
 	 * Triangle Lookup Table.
